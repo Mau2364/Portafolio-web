@@ -289,144 +289,229 @@
         </section>
 
 
-        <!-- ==================== PROYECTOS ==================== -->
+        
+<!-- ==================== PROYECTOS ==================== -->
 
-        <section id="proyectos" class="section">
+<section id="proyectos" class="section">
 
-            <div class="section-container">
+    <div class="section-container">
 
-                <div class="section-title">
+        <div class="section-title">
+            <p class="section-label">SOLUCIONES DESARROLLADAS</p>
+            <h2>Proyectos destacados</h2>
+        </div>
 
-                    <p class="section-label">
-                        SOLUCIONES DESARROLLADAS
+        <!-- FILTROS -->
+
+        <div class="project-filters">
+
+            <button class="filter-btn active"
+                    data-filter="all" type="button">
+                Todos
+            </button>
+
+            <button class="filter-btn"
+                    data-filter="web" type="button">
+                Web
+            </button>
+
+            <button class="filter-btn"
+                    data-filter="desktop" type="button">
+                Escritorio
+            </button>
+
+            <button class="filter-btn"
+                    data-filter="backend" type="button">
+                Backend
+            </button>
+
+        </div>
+
+        <!-- CONTROLES DEL CARRUSEL -->
+
+        <div class="carousel-controls">
+
+            <button id="prevProject"
+                    type="button"
+                    aria-label="Proyecto anterior">
+                &#10094;
+            </button>
+
+            <span id="projectCounter" aria-live="polite">
+                1 de 5
+            </span>
+
+            <button id="nextProject"
+                    type="button"
+                    aria-label="Proyecto siguiente">
+                &#10095;
+            </button>
+
+        </div>
+
+        <!-- GALERÍA -->
+
+        <div class="projects-grid" aria-label="Galería de proyectos">
+
+            <!-- SEGEDE -->
+
+            <article class="project-card" data-category="web">
+
+                <div class="project-image">
+                    SEGEDE
+                </div>
+
+                <div class="project-content">
+
+                    <h3>SEGEDE | Gestión energética</h3>
+
+                    <p>
+                        Plataforma para administrar recursos
+                        energéticos, bancos de baterías,
+                        movimientos de energía, mantenimientos
+                        y reportes.
                     </p>
 
-                    <h2>Proyectos destacados</h2>
+                    <div class="project-tags">
+                        <span>C#</span>
+                        <span>.NET 8</span>
+                        <span>Azure SQL</span>
+                        <span>Razor Pages</span>
+                    </div>
 
                 </div>
 
-                <div class="project-filters">
+            </article>
 
-                    <button class="filter-btn active" data-filter="all">
-                        Todos
-                    </button>
+            <!-- GESTIÓN DE TORNEOS -->
 
-                    <button class="filter-btn" data-filter="web">
-                        Web
-                    </button>
+            <article class="project-card" data-category="desktop">
 
-                    <button class="filter-btn" data-filter="desktop">
-                        Escritorio
-                    </button>
+                <div class="project-image">
+                    TOURNAMENTS
+                </div>
+
+                <div class="project-content">
+
+                    <h3>Sistema de gestión de torneos</h3>
+
+                    <p>
+                        Aplicación para gestionar torneos
+                        de videojuegos, jugadores, inscripciones
+                        y resultados mediante una arquitectura
+                        MVC y componentes reutilizables.
+                    </p>
+
+                    <div class="project-tags">
+                        <span>Java</span>
+                        <span>Swing</span>
+                        <span>MySQL</span>
+                        <span>MVC</span>
+                    </div>
 
                 </div>
 
-                <div class="projects-grid">
+            </article>
 
-                    <!-- PROYECTO SEGEDE -->
+            <!-- ADMINISTRACIÓN DE USUARIOS -->
 
-                    <article class="project-card" data-category="web">
+            <article class="project-card" data-category="desktop">
 
-                        <div class="project-image">
-                            SEGEDE
-                        </div>
+                <div class="project-image">
+                    USER MANAGEMENT
+                </div>
 
-                        <div class="project-content">
+                <div class="project-content">
 
-                            <h3>SEGEDE | Gestión energética</h3>
+                    <h3>Administración de usuarios</h3>
 
-                            <p>
-                                Plataforma para la administración
-                                de recursos energéticos, gestión
-                                de baterías, movimientos de energía,
-                                mantenimientos y generación de reportes.
-                            </p>
+                    <p>
+                        Aplicación para gestionar usuarios
+                        con operaciones CRUD, autenticación,
+                        recuperación de contraseñas y consumo
+                        de servicios REST.
+                    </p>
 
-                            <div class="project-tags">
-
-                                <span>C#</span>
-                                <span>.NET 8</span>
-                                <span>Azure SQL</span>
-                                <span>Razor Pages</span>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PROYECTO TORNEOS -->
-
-                    <article class="project-card" data-category="desktop">
-
-                        <div class="project-image">
-                            TOURNAMENTS
-                        </div>
-
-                        <div class="project-content">
-
-                            <h3>Sistema de gestión de torneos</h3>
-
-                            <p>
-                                Aplicación para administrar torneos
-                                de videojuegos, jugadores, inscripciones
-                                y resultados, aplicando arquitectura MVC
-                                y componentes reutilizables.
-                            </p>
-
-                            <div class="project-tags">
-
-                                <span>Java</span>
-                                <span>Swing</span>
-                                <span>MySQL</span>
-                                <span>MVC</span>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PROYECTO USUARIOS -->
-
-                    <article class="project-card" data-category="desktop">
-
-                        <div class="project-image">
-                            USER MANAGEMENT
-                        </div>
-
-                        <div class="project-content">
-
-                            <h3>Administración de usuarios</h3>
-
-                            <p>
-                                Sistema de gestión de usuarios con
-                                operaciones CRUD, integración con
-                                API REST, almacenamiento en MongoDB,
-                                protección de contraseñas y recuperación
-                                de cuentas.
-                            </p>
-
-                            <div class="project-tags">
-
-                                <span>Java</span>
-                                <span>Maven</span>
-                                <span>MongoDB</span>
-                                <span>REST API</span>
-
-                            </div>
-
-                        </div>
-
-                    </article>
+                    <div class="project-tags">
+                        <span>Java</span>
+                        <span>Maven</span>
+                        <span>MongoDB</span>
+                        <span>API REST</span>
+                    </div>
 
                 </div>
 
-            </div>
+            </article>
 
-        </section>
+            <!-- DESKHELP -->
+
+            <article class="project-card" data-category="backend">
+
+                <div class="project-image">
+                    DESKHELP
+                </div>
+
+                <div class="project-content">
+
+                    <h3>DeskHelp | Gestión de tickets</h3>
+
+                    <p>
+                        Sistema de soporte para administrar
+                        usuarios, departamentos y tickets.
+                        Incluye persistencia con JDBC,
+                        seguridad de contraseñas y análisis
+                        de texto mediante diccionarios
+                        técnicos y emocionales.
+                    </p>
+
+                    <div class="project-tags">
+                        <span>Java 17</span>
+                        <span>POO</span>
+                        <span>JDBC</span>
+                        <span>SQL Server</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- PORTAFOLIO WEB -->
+
+            <article class="project-card" data-category="web">
+
+                <div class="project-image">
+                    PORTAFOLIO WEB
+                </div>
+
+                <div class="project-content">
+
+                    <h3>Portafolio web profesional</h3>
+
+                    <p>
+                        Sitio web personal responsive
+                        desarrollado para presentar proyectos,
+                        habilidades y experiencia profesional,
+                        con una galería interactiva y
+                        navegación entre secciones.
+                    </p>
+
+                    <div class="project-tags">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                        <span>Responsive</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
 
 
         <!-- ==================== PERFIL PROFESIONAL ==================== -->

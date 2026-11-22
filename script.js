@@ -14,25 +14,36 @@ const projectCounter = document.getElementById("projectCounter");
 
 let currentProject = 0;
 
-// Obtener únicamente los proyectos del filtro activo
+const AUTO_INTERVAL = 5000;
+let autoCarousel = null;
+
+// Obtener proyectos visibles según el filtro
 function getVisibleProjects() {
     return Array.from(projectCards).filter(card => !card.hidden);
 }
 
-// Cantidad de tarjetas que caben en pantalla
+// Cantidad de tarjetas por pantalla
 function getVisibleCount() {
     if (window.innerWidth <= 650) return 1;
     if (window.innerWidth <= 900) return 2;
     return 3;
 }
 
-// Actualizar contador y flechas
+// Máxima posición del carrusel
+function getMaxIndex() {
+    const projects = getVisibleProjects();
+
+    return Math.max(
+        0,
+        projects.length - Math.min(getVisibleCount(), projects.length)
+    );
+}
+
+// Actualizar contador y botones
 function updateCarouselControls() {
 
     const projects = getVisibleProjects();
-    const visibleCount = Math.min(getVisibleCount(), projects.length);
-
-    const maxIndex = Math.max(0, projects.length - visibleCount);
+    const maxIndex = getMaxIndex();
 
     currentProject = Math.min(currentProject, maxIndex);
 
@@ -45,43 +56,85 @@ function updateCarouselControls() {
     nextButton.disabled = currentProject >= maxIndex;
 }
 
-// Mover carrusel a una tarjeta
+// Mostrar un proyecto
 function showProject(index) {
 
     const projects = getVisibleProjects();
-
-    const maxIndex = Math.max(
-        0,
-        projects.length - Math.min(getVisibleCount(), projects.length)
-    );
+    const maxIndex = getMaxIndex();
 
     currentProject = Math.max(0, Math.min(index, maxIndex));
 
     const target = projects[currentProject];
 
     if (target) {
+        const distance =
+            target.getBoundingClientRect().left -
+            carousel.getBoundingClientRect().left +
+            carousel.scrollLeft;
+
         carousel.scrollTo({
-            left: target.offsetLeft - carousel.offsetLeft,
-            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-                ? "instant"
-                : "smooth"
+            left: distance,
+            behavior: window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches ? "auto" : "smooth"
         });
     }
 
     updateCarouselControls();
 }
 
-// Botón anterior
+/* =========================================================
+   REPRODUCCIÓN AUTOMÁTICA
+========================================================= */
+
+// Avanzar cada 5 segundos
+function autoMoveCarousel() {
+
+    const maxIndex = getMaxIndex();
+
+    if (maxIndex === 0) return;
+
+    if (currentProject >= maxIndex) {
+        showProject(0);
+    } else {
+        showProject(currentProject + 1);
+    }
+}
+
+// Detener reproducción
+function stopAutoCarousel() {
+    clearInterval(autoCarousel);
+    autoCarousel = null;
+}
+
+// Iniciar reproducción
+function startAutoCarousel() {
+
+    stopAutoCarousel();
+
+    autoCarousel = setInterval(() => {
+        autoMoveCarousel();
+    }, AUTO_INTERVAL);
+}
+
+/* =========================================================
+   BOTONES MANUALES
+========================================================= */
+
 prevButton.addEventListener("click", () => {
     showProject(currentProject - 1);
+    startAutoCarousel();
 });
 
-// Botón siguiente
 nextButton.addEventListener("click", () => {
     showProject(currentProject + 1);
+    startAutoCarousel();
 });
 
-// Filtros
+/* =========================================================
+   FILTROS
+========================================================= */
+
 filterButtons.forEach(button => {
 
     button.addEventListener("click", () => {
@@ -101,17 +154,38 @@ filterButtons.forEach(button => {
         });
 
         currentProject = 0;
-        carousel.scrollLeft = 0;
+        carousel.scrollTo({
+            left: 0,
+            behavior: "auto"
+        });
 
         updateCarouselControls();
+
+        // Reiniciar temporizador al cambiar filtro
+        startAutoCarousel();
     });
 
 });
 
-// Ajustar controles al cambiar tamaño de pantalla
+/* =========================================================
+   PAUSAR AL INTERACTUAR
+========================================================= */
+
+// Pausar cuando el mouse esté sobre los proyectos
+carousel.addEventListener("mouseenter", stopAutoCarousel);
+
+// Continuar cuando el mouse salga
+carousel.addEventListener("mouseleave", startAutoCarousel);
+
+// Pausar al navegar con teclado
+carousel.addEventListener("focusin", stopAutoCarousel);
+carousel.addEventListener("focusout", startAutoCarousel);
+
+// Ajustar al cambiar tamaño de pantalla
 window.addEventListener("resize", () => {
     showProject(currentProject);
 });
 
 // Inicializar
 updateCarouselControls();
+startAutoCarousel();

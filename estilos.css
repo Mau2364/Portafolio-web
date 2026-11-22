@@ -741,3 +741,47 @@ h1 {
 
     color: var(--color-light-text);
 }
+
+/* ==================== FILTROS DE PROYECTOS ==================== */
+
+.project-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.filter-btn {
+    padding: 10px 22px;
+    border: 1px solid var(--color-accent);
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--color-dark);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background-color: var(--color-accent);
+    color: var(--color-dark);
+}
+
+.project-card[hidden] {
+    display: none;
+}
+
+/* ==================== EFECTOS DE TARJETAS ==================== */
+
+.project-card {
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(23, 34, 31, 0.15);
+}

@@ -1100,3 +1100,265 @@ h1 {
     }
 }
 
+
+/* =========================================
+   BOTÓN FLOTANTE DE WHATSAPP
+========================================= */
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #20BFA9;
+    color: #17221F;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 6px 18px rgba(23, 34, 31, 0.25),
+        0 12px 30px rgba(23, 34, 31, 0.12);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-6px) scale(1.08);
+
+    box-shadow:
+        0 10px 25px rgba(23, 34, 31, 0.30),
+        0 18px 40px rgba(23, 34, 31, 0.18);
+}
+
+.whatsapp-float:focus-visible {
+    outline: 3px solid #17221F;
+    outline-offset: 4px;
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 650px) {
+    .whatsapp-float {
+        width: 52px;
+        height: 52px;
+        bottom: 18px;
+        right: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .whatsapp-float {
+        transition: none;
+    }
+}
+
+/* =========================================
+   BOTÓN VOLVER ARRIBA
+========================================= */
+
+.scroll-top-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    z-index: 1000;
+
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #17221F;
+    color: #20BFA9;
+
+    border: none;
+    border-radius: 50%;
+
+    font-size: 26px;
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 18px rgba(23, 34, 31, 0.25);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.scroll-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+    background-color: #20BFA9;
+    color: #17221F;
+    transform: translateY(-5px);
+}
+
+.scroll-top-btn:focus-visible {
+    outline: 3px solid #20BFA9;
+    outline-offset: 4px;
+}
+
+/* CELULARES */
+
+@media (max-width: 650px) {
+    .scroll-top-btn {
+        bottom: 85px;
+        right: 19px;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-top-btn {
+        transition: none;
+    }
+}
+
+
+/* =========================================
+   FORMULARIO DE CONTACTO
+========================================= */
+
+.contact-form-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 50px auto 0;
+    padding: 35px;
+
+    background-color: #ffffff;
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 25px rgba(23, 34, 31, 0.15),
+        0 20px 45px rgba(23, 34, 31, 0.08);
+}
+
+.contact-form-container h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #17221F;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.contact-form-container > p {
+    color: #43534F;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    color: #17221F;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 13px 15px;
+
+    border: 1px solid #BFD1CC;
+    border-radius: 7px;
+
+    background-color: #F8FCFB;
+    color: #17221F;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #20BFA9;
+    box-shadow: 0 0 0 3px rgba(32, 191, 169, 0.15);
+}
+
+.contact-submit-btn {
+    width: 100%;
+    padding: 14px 25px;
+
+    background-color: #17221F;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 7px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.contact-submit-btn:hover {
+    background-color: #20BFA9;
+    color: #17221F;
+    transform: translateY(-3px);
+}
+
+.contact-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.form-status {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.form-status.success {
+    color: #167A58;
+}
+
+.form-status.error {
+    color: #B42318;
+}
+
+@media (max-width: 650px) {
+    .contact-form-container {
+        padding: 25px 20px;
+    }
+}

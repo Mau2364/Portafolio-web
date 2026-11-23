@@ -189,3 +189,115 @@ window.addEventListener("resize", () => {
 // Inicializar
 updateCarouselControls();
 startAutoCarousel();
+
+
+/* =========================================
+   BOTÓN VOLVER ARRIBA
+========================================= */
+
+const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+// Mostrar u ocultar según la posición
+function toggleScrollTopButton() {
+
+    if (window.scrollY > 300) {
+        scrollTopBtn.classList.add("visible");
+    } else {
+        scrollTopBtn.classList.remove("visible");
+    }
+
+}
+
+// Detectar desplazamiento
+window.addEventListener("scroll", toggleScrollTopButton, {
+    passive: true
+});
+
+// Volver al inicio al hacer clic
+scrollTopBtn.addEventListener("click", () => {
+
+    window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches ? "instant" : "smooth"
+    });
+
+});
+
+// Comprobar la posición al cargar
+toggleScrollTopButton();
+
+
+//FORMULARIO DE CONTACTO - EMAILJS
+
+// Configuración de EmailJS
+const EMAILJS_PUBLIC_KEY = "9IAiV1fYaYXYGHkM9";
+const EMAILJS_SERVICE_ID = "service_x0dgksj";
+const EMAILJS_TEMPLATE_ID = "template_h7zubc1";
+
+// Inicializar EmailJS
+emailjs.init({
+    publicKey: EMAILJS_PUBLIC_KEY
+});
+
+// Elementos del formulario
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("formStatus");
+const submitButton = contactForm.querySelector(
+    'button[type="submit"]'
+);
+
+// Enviar formulario
+contactForm.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    // Validar campos
+    if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
+    }
+
+    // Evitar envíos duplicados
+    submitButton.disabled = true;
+    submitButton.textContent = "Enviando...";
+
+    formStatus.textContent = "Enviando mensaje...";
+    formStatus.className = "form-status";
+
+    try {
+
+        // Enviar mensaje mediante EmailJS
+        await emailjs.sendForm(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            contactForm
+        );
+
+        // Mensaje de éxito
+        formStatus.textContent =
+            "¡Mensaje enviado correctamente! Pronto me pondré en contacto contigo.";
+
+        formStatus.className = "form-status success";
+
+        // Limpiar formulario
+        contactForm.reset();
+
+    } catch (error) {
+
+        console.error("Error al enviar el correo:", error);
+
+        formStatus.textContent =
+            "No se pudo enviar el mensaje. Inténtalo nuevamente.";
+
+        formStatus.className = "form-status error";
+
+    } finally {
+
+        submitButton.disabled = false;
+        submitButton.textContent = "Enviar mensaje";
+
+    }
+
+});

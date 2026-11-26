@@ -40,6 +40,8 @@ function getMaxIndex() {
 }
 
 // Actualizar contador y botones
+
+// Actualizar contador y botones
 function updateCarouselControls() {
 
     const projects = getVisibleProjects();
@@ -47,14 +49,21 @@ function updateCarouselControls() {
 
     currentProject = Math.min(currentProject, maxIndex);
 
+    // Obtener el idioma actual
+    const language = document.documentElement.lang || "es";
+
+    // Obtener la traducción de "de"
+    const separator = translations[language].carouselOf;
+
     projectCounter.textContent =
         projects.length === 0
-            ? "0 de 0"
-            : `${currentProject + 1} de ${projects.length}`;
+            ? `0 ${separator} 0`
+            : `${currentProject + 1} ${separator} ${projects.length}`;
 
     prevButton.disabled = currentProject === 0;
     nextButton.disabled = currentProject >= maxIndex;
 }
+
 
 // Mostrar un proyecto
 function showProject(index) {
@@ -249,9 +258,34 @@ const submitButton = contactForm.querySelector(
 );
 
 // Enviar formulario
+
+// Obtener una traducción según el idioma actual
+function translate(key) {
+
+    const language = document.documentElement.lang || "es";
+
+    return translations[language]?.[key] ?? translations.es[key];
+}
+
+// Actualizar el mensaje de estado del formulario
+function updateFormStatus(key, status = "") {
+
+    formStatus.dataset.i18n = key;
+
+    formStatus.textContent = translate(key);
+
+    formStatus.className = status
+        ? `form-status ${status}`
+        : "form-status";
+}
+
+// Enviar formulario
 contactForm.addEventListener("submit", async (event) => {
 
     event.preventDefault();
+
+    // Evitar envíos duplicados
+    if (submitButton.disabled) return;
 
     // Validar campos
     if (!contactForm.checkValidity()) {
@@ -259,12 +293,13 @@ contactForm.addEventListener("submit", async (event) => {
         return;
     }
 
-    // Evitar envíos duplicados
+    // Deshabilitar botón durante el envío
     submitButton.disabled = true;
-    submitButton.textContent = "Enviando...";
 
-    formStatus.textContent = "Enviando mensaje...";
-    formStatus.className = "form-status";
+    submitButton.dataset.i18n = "formSending";
+    submitButton.textContent = translate("formSending");
+
+    updateFormStatus("formSendingStatus");
 
     try {
 
@@ -276,10 +311,7 @@ contactForm.addEventListener("submit", async (event) => {
         );
 
         // Mensaje de éxito
-        formStatus.textContent =
-            "¡Mensaje enviado correctamente! Pronto me pondré en contacto contigo.";
-
-        formStatus.className = "form-status success";
+        updateFormStatus("formSuccess", "success");
 
         // Limpiar formulario
         contactForm.reset();
@@ -288,16 +320,229 @@ contactForm.addEventListener("submit", async (event) => {
 
         console.error("Error al enviar el correo:", error);
 
-        formStatus.textContent =
-            "No se pudo enviar el mensaje. Inténtalo nuevamente.";
-
-        formStatus.className = "form-status error";
+        // Mensaje de error
+        updateFormStatus("formError", "error");
 
     } finally {
 
         submitButton.disabled = false;
-        submitButton.textContent = "Enviar mensaje";
+
+        submitButton.dataset.i18n = "formSubmit";
+        submitButton.textContent = translate("formSubmit");
 
     }
 
 });
+
+
+
+/* =========================================
+   INTERNACIONALIZACIÓN DEL PORTAFOLIO
+========================================= */
+
+const languageButtons = document.querySelectorAll(".language-btn");
+
+// Traducir atributos de un elemento
+function translateAttribute(selector, attribute, key, language) {
+
+    const elements = document.querySelectorAll(selector);
+
+    elements.forEach(element => {
+
+        if (translations[language][key] !== undefined) {
+
+            element.setAttribute(
+                attribute,
+                translations[language][key]
+            );
+
+        }
+
+    });
+
+}
+
+// Cambiar idioma
+function changeLanguage(language) {
+
+    // Validar que el idioma exista
+    if (!translations[language]) {
+        language = "es";
+    }
+
+    // Actualizar el idioma del documento
+    document.documentElement.lang = language;
+
+    // Traducir textos
+    const elements = document.querySelectorAll("[data-i18n]");
+
+    elements.forEach(element => {
+
+        const key = element.dataset.i18n;
+
+        if (translations[language][key] !== undefined) {
+            element.textContent = translations[language][key];
+        }
+
+    });
+
+    // Traducir placeholders
+    const placeholders = document.querySelectorAll(
+        "[data-i18n-placeholder]"
+    );
+
+    placeholders.forEach(element => {
+
+        const key = element.dataset.i18nPlaceholder;
+
+        if (translations[language][key] !== undefined) {
+            element.placeholder = translations[language][key];
+        }
+
+    });
+
+    // Traducir título de la página
+    document.title = translations[language].pageTitle;
+
+    // Traducir descripción de la página
+    translateAttribute(
+        'meta[name="description"]',
+        "content",
+        "pageDescription",
+        language
+    );
+
+    // Traducir navegación
+    translateAttribute(
+        ".navbar",
+        "aria-label",
+        "navLabel",
+        language
+    );
+
+    // Traducir logotipos
+    translateAttribute(
+        ".nav-logo img, .footer-logo",
+        "alt",
+        "logoAlt",
+        language
+    );
+
+    translateAttribute(
+        ".hero-logo",
+        "alt",
+        "heroLogoAlt",
+        language
+    );
+
+    // Traducir fotografía
+    translateAttribute(
+        ".about-image img",
+        "alt",
+        "photoAlt",
+        language
+    );
+
+    // Traducir vistas previas de los CV
+    translateAttribute(
+        'img[src="CV_ATS_Mauricio.png"]',
+        "alt",
+        "cvSpanishAlt",
+        language
+    );
+
+    translateAttribute(
+        'img[src="Mauricio_CV_ATS_English.png"]',
+        "alt",
+        "cvEnglishAlt",
+        language
+    );
+
+    // Traducir controles del carrusel
+    translateAttribute(
+        "#prevProject",
+        "aria-label",
+        "carouselPrevious",
+        language
+    );
+
+    translateAttribute(
+        "#nextProject",
+        "aria-label",
+        "carouselNext",
+        language
+    );
+
+    translateAttribute(
+        ".projects-grid",
+        "aria-label",
+        "carouselGallery",
+        language
+    );
+
+    // Traducir botón volver arriba
+    translateAttribute(
+        "#scrollTopBtn",
+        "aria-label",
+        "scrollTop",
+        language
+    );
+
+    translateAttribute(
+        "#scrollTopBtn",
+        "title",
+        "scrollTopTitle",
+        language
+    );
+
+    // Traducir botón flotante de WhatsApp
+    translateAttribute(
+        ".whatsapp-float",
+        "aria-label",
+        "whatsappLabel",
+        language
+    );
+
+    translateAttribute(
+        ".whatsapp-float",
+        "title",
+        "whatsappTitle",
+        language
+    );
+
+    // Actualizar contador del carrusel
+    updateCarouselControls();
+
+    // Actualizar los botones de idioma
+    languageButtons.forEach(button => {
+
+        const isActive = button.dataset.lang === language;
+
+        button.classList.toggle("active", isActive);
+
+        button.setAttribute("aria-pressed", isActive);
+
+    });
+
+    // Guardar la preferencia del visitante
+    localStorage.setItem("portfolioLanguage", language);
+
+}
+
+// Eventos de los botones
+languageButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        changeLanguage(button.dataset.lang);
+
+    });
+
+});
+
+// Recuperar el idioma guardado
+const savedLanguage =
+    localStorage.getItem("portfolioLanguage") || "es";
+
+changeLanguage(savedLanguage);
+

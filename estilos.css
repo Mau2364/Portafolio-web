@@ -1362,3 +1362,272 @@ h1 {
         padding: 25px 20px;
     }
 }
+
+
+/* CONTENEDOR DE BOTONES CV */
+
+
+/* =========================================
+   BOTONES DE DESCARGA DE CV
+========================================= */
+
+.cv-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.cv-wrapper {
+    position: relative;
+}
+
+.btn-download-cv {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 13px 25px;
+
+    background-color: #17221F;
+    color: #ffffff;
+
+    border: 2px solid #17221F;
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+}
+
+.btn-download-cv:hover {
+    background-color: #20BFA9;
+    border-color: #20BFA9;
+    color: #17221F;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(23, 34, 31, 0.2);
+}
+
+/* Botón del CV en inglés */
+
+.cv-buttons .cv-secondary {
+    background-color: transparent;
+    color: #17221F;
+}
+
+.cv-buttons .cv-secondary:hover {
+    background-color: #20BFA9;
+    border-color: #20BFA9;
+}
+
+/* =========================================
+   VISTA PREVIA DE LOS CV
+========================================= */
+
+.cv-preview {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    width: 650px;
+    max-width: 90vw;
+
+    padding: 15px;
+    box-sizing: border-box;
+
+    background-color: #ffffff;
+    border: 1px solid #BFD1CC;
+    border-radius: 12px;
+
+    box-shadow: 0 15px 60px rgba(23, 34, 31, 0.35);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translate(-50%, -50%) scale(0.95);
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease;
+
+    z-index: 9999;
+}
+
+/* Imagen del CV */
+
+.cv-preview img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+/* Mostrar vista previa */
+
+.cv-wrapper:hover .cv-preview,
+.cv-wrapper:focus-within .cv-preview {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* =========================================
+   DISEÑO RESPONSIVE
+========================================= */
+
+@media (max-width: 650px) {
+    .cv-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cv-wrapper {
+        width: 100%;
+    }
+
+    .cv-wrapper .btn-download-cv {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .cv-preview {
+        display: none;
+    }
+}
+
+@media (hover: none) {
+    .cv-preview {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cv-preview,
+    .btn-download-cv {
+        transition: none;
+    }
+}
+
+
+/* =========================================
+   SELECTOR DE IDIOMA
+========================================= */
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    padding: 5px;
+    border: 1px solid #20BFA9;
+    border-radius: 8px;
+}
+
+.language-btn {
+    padding: 6px 10px;
+
+    background-color: transparent;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 5px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-btn.active {
+    background-color: #20BFA9;
+    color: #17221F;
+}
+
+.language-btn:hover {
+    background-color: #20BFA9;
+    color: #17221F;
+}
+
+.language-divider {
+    color: #20BFA9;
+}
+
+.language-btn:focus-visible {
+    outline: 2px solid #20BFA9;
+    outline-offset: 3px;
+}
+
+/* =========================================
+   EFECTOS DE MISIÓN, VISIÓN Y VALORES
+========================================= */
+
+.profile-card {
+    transition:
+        background-color 0.4s ease,
+        border-color 0.4s ease,
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.profile-card:hover {
+    background-color: rgba(32, 191, 169, 0.10);
+
+    border-color: #20BFA9;
+
+    transform: scale(1.03);
+
+    box-shadow: 0 0 25px rgba(32, 191, 169, 0.25);
+}
+
+/* Efecto individual de cada valor */
+
+.values-list li {
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+}
+
+.values-list li:hover {
+    transform: translateX(10px);
+    color: #20BFA9;
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-card,
+    .values-list li {
+        transition: none;
+    }
+
+    .profile-card:hover,
+    .values-list li:hover {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .skill-card,
+    .skill-card::before,
+    .value-card {
+        transition: none;
+    }
+
+    .skill-card:hover,
+    .value-card:hover {
+        transform: none;
+    }
+}

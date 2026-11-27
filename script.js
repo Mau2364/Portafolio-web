@@ -315,6 +315,7 @@ contactForm.addEventListener("submit", async (event) => {
 
         // Limpiar formulario
         contactForm.reset();
+        playContactAnimation();
 
     } catch (error) {
 
@@ -546,3 +547,98 @@ const savedLanguage =
 
 changeLanguage(savedLanguage);
 
+/* =========================================
+   ANIMACIONES AL DESPLAZARSE
+========================================= */
+
+if (
+    "IntersectionObserver" in window &&
+    !window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches
+) {
+
+    const revealElements = document.querySelectorAll(
+        ".section-title, " +
+        ".about-image, " +
+        ".about-text, " +
+        ".skills-grid, " +
+        ".profile-grid, " +
+        ".projects-grid, " +
+        ".contact-links, " +
+        ".contact-form-container"
+    );
+
+    const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("revealed");
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.10
+        }
+    );
+
+    revealElements.forEach(element => {
+
+        revealObserver.observe(element);
+
+        element.classList.add("scroll-reveal");
+
+    });
+
+}
+
+// Animación JSON del avión de papel
+
+const contactAnimation = document.getElementById("contactAnimation");
+
+let planeAnimation = null;
+let planeReady = false;
+
+if (window.lottie && contactAnimation) {
+
+    planeAnimation = lottie.loadAnimation({
+        container: contactAnimation,
+        renderer: "svg",
+        loop: false,
+        autoplay: false,
+        path: "contact-animation.json"
+    });
+
+    planeAnimation.addEventListener("DOMLoaded", () => {
+        planeReady = true;
+        planeAnimation.goToAndStop(0, true);
+    });
+
+    planeAnimation.addEventListener("complete", () => {
+        contactAnimation.classList.remove("flying");
+        planeAnimation.goToAndStop(0, true);
+    });
+}
+
+function playContactAnimation() {
+
+    if (!planeAnimation || !planeReady) {
+        return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+    }
+
+    contactAnimation.classList.add("flying");
+
+    planeAnimation.goToAndPlay(0, true);
+}
